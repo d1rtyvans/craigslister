@@ -20,8 +20,7 @@ class Craigslister
 
   def scrape
     links.each do |link|
-      @mech.get(link)
-      @results << Item.new(scrape_item_info) rescue p 'no image'
+      get_data_from(link)
     end
   end
 
@@ -43,7 +42,12 @@ class Craigslister
       "https://#{area}.craigslist.org/"
     end
 
-    def scrape_item_info
+    def get_data_from link
+      @mech.get(link)
+      @results << Item.new(scrape_item_data) rescue p 'no image'
+    end
+
+    def scrape_item_data
       {
         image: @mech.page.images[0].src,
         title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),

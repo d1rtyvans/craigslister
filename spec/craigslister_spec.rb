@@ -14,7 +14,32 @@ class Tester < Craigslister
     page = Nokogiri::HTML(open(url))
     page.css('.hdrlnk').map {|link| link['href']}
   end
+
+  def get_data_from link
+    page = Nokogiri::HTML(open(link))
+    @results << Item.new(scrape_item_data_from(page))
+  end
+
+  def scrape_item_data_from page
+    {
+      image: page.css('img')[0]['src'],
+      title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+      price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
+      location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
+      description: page.at('section#postingbody').text
+    }
+  end
 end
+
+
+# image: @mech.page.images[0].src,
+# title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+# price: @mech.page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
+# location: @mech.page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
+# description: @mech.page.at('section#postingbody').text
+
+# @mech.get(link)
+# @results << Item.new(scrape_item_data) rescue p 'no image'
 
 
 
@@ -93,7 +118,7 @@ RSpec.describe Craigslister, '#links' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
 
     expect(hondas.links.count).to eq(4)
-    expect(hondas.links[0]).to eq("/eby/mcd/5274935295.html")
+    expect(hondas.links[0]).to eq("./fake_item_1.html")
   end
 end
 
@@ -101,12 +126,11 @@ end
 
 RSpec.describe Craigslister, '#results' do
   it 'returns an array of "Items"' do
-    hondas = Craigslister.new(item: 'Honda CBR', low: 2000, high: 6000)
+    hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
     hondas.scrape
 
-    # expect(hondas.results.count).to eq(4)
-    expect(hondas.results.count).to eq(92)
-    expect(hondas.results[0].title).to eq("2015 Honda CBR® 300R")
+    expect(hondas.results.count).to eq(4)
+    expect(hondas.results[0].title).to eq("2015 Honda CBRÂ® 300R")
     expect(hondas.results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
     expect(hondas.results[0].price).to eq(4399)
     expect(hondas.results[0].location).to eq("vallejo / benicia")
