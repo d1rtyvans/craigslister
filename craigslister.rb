@@ -17,17 +17,9 @@ class Craigslister
 
   private
     def price_query
-      if high && low
-        "min_price=#{low}&max_price=#{high}&"
-      elsif high
-        "max_price=#{high}&"
-      elsif low
-        "min_price=#{low}&"
-      end
-
-
-      # https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip
-
-
+      result = ""
+      result += "min_price=#{low}&" if low
+      result += "max_price=#{high}&" if high
+      result
     end
 end
