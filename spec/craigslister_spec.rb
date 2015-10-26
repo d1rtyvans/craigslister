@@ -1,6 +1,23 @@
 require 'spec_helper'
 require_relative '../craigslister'
 
+
+
+RSpec.describe Craigslister do
+  context 'upon initialization' do
+    it 'creates an instance of Mechanize' do
+      allow(Mechanize).to receive(:new).and_return(Mechanize.new)
+
+      kewl_thing = Craigslister.new(item: 'kewl thing')
+
+      expect(Mechanize).to have_received(:new)
+    end
+  end
+end
+
+
+
+
 RSpec.describe Craigslister, '#url' do
   it 'builds craigslist url from arguments' do
     hondas = Craigslister.new(item: 'Honda CBR')
@@ -49,6 +66,12 @@ end
 
 
 
+
 RSpec.describe Craigslister, '#links' do
-  
+  it 'returns an array of all item urls on a query page' do
+    hondas = Craigslister.new(item: 'Honda CBR', low: 2000, high: 6000)
+
+    expect(hondas.links.count).to eq(100)
+    expect(hondas.links[0]).to eq("/eby/mcd/5274935295.html")
+  end
 end
