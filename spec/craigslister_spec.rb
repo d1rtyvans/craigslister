@@ -27,12 +27,21 @@ RSpec.describe Craigslister, '#url' do
     end
   end
 
-  context ' when given a maximum price' do
-    it 'builds url with price limit' do
+  context 'when given a maximum price' do
+    it 'builds url with maximum price limit' do
       bigger_tv = Craigslister.new(item: 'BIGGER TV', high: 6000)
 
       expect(bigger_tv.url).to eq(
         'https://sfbay.craigslist.org/search/sss?sort=rel&max_price=6000&query=bigger+tv')
+    end
+  end
+
+  context 'when given a minimum price' do
+    it 'builds url with a minimum price limit' do
+      cat_nip = Craigslister.new(item: 'Catnip', low: 200)
+
+      expect(cat_nip.url).to eq(
+        "https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip")
     end
   end
 end

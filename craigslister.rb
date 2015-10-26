@@ -21,9 +21,12 @@ class Craigslister
         "min_price=#{low}&max_price=#{high}&"
       elsif high
         "max_price=#{high}&"
+      elsif low
+        "min_price=#{low}&"
       end
 
-      # https://sfbay.craigslist.org/search/sss?sort=rel&max_price=6000&query=bigger+tv
+
+      # https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip
 
 
     end
