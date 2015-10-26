@@ -9,7 +9,7 @@ class Craigslister
   def initialize args
     @results = []
     @area = args.fetch(:area, 'sfbay')
-    @item = args.fetch(:item)
+    @item = args[:item]
     @high = args.fetch(:high, nil)
     @low  = args.fetch(:low, nil)
     validate_price_range
