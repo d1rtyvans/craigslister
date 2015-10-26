@@ -2,37 +2,6 @@ require 'spec_helper'
 require_relative '../craigslister'
 
 
-# stubs #url and #links so that Craigslister can be tested
-  # seperate from the live website... couldn't come up with
-  # a better way to do this
-class Tester < Craigslister
-  def url
-    "#{Dir.pwd}/test_page.html"
-  end
-
-  def links
-    page = Nokogiri::HTML(open(url))
-    page.css('.hdrlnk').map {|link| link['href']}
-  end
-
-  def get_data_from link
-    page = Nokogiri::HTML(open(link))
-    @results << Item.new(scrape_item_data_from(page))
-  end
-
-  def scrape_item_data_from page
-    {
-      image: page.css('img')[0]['src'],
-      title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-      price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-      location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-      description: page.at('section#postingbody').text
-    }
-  end
-end
-
-
-
 RSpec.describe Craigslister do
   it 'creates an instance of Mechanize' do
     allow(Mechanize).to receive(:new).and_return(Mechanize.new)
@@ -96,6 +65,38 @@ RSpec.describe Craigslister, '#url' do
       expect(cat_nip.url).to eq(
         "https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip")
     end
+  end
+end
+
+
+
+
+# stubs #url and #links so that Craigslister can be tested
+  # seperate from the live website... couldn't come up with
+  # a better way to do this
+class Tester < Craigslister
+  def url
+    "#{Dir.pwd}/test_page.html"
+  end
+
+  def links
+    page = Nokogiri::HTML(open(url))
+    page.css('.hdrlnk').map {|link| link['href']}
+  end
+
+  def get_data_from link
+    page = Nokogiri::HTML(open(link))
+    @results << Item.new(scrape_item_data_from(page))
+  end
+
+  def scrape_item_data_from page
+    {
+      image: page.css('img')[0]['src'],
+      title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+      price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
+      location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
+      description: page.at('section#postingbody').text
+    }
   end
 end
 
