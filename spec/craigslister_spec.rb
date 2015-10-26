@@ -86,5 +86,5 @@ end
 
 
 RSpec.describe Craigslister, '#results' do
-  it ''
+  # it 'returns an array of "Items" '
 end
