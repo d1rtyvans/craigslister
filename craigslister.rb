@@ -5,7 +5,7 @@ end
 
 class Craigslister
   attr_reader :area, :item, :high, :low
-  attr_writer :url # only for tests
+  attr_writer :url # used in order to decouple tests from craigslist site
 
   def initialize args
     @area = args.fetch(:area, 'sfbay')
@@ -48,9 +48,7 @@ class Craigslister
     end
 
     def validate_price_range
-      if low && high
-        raise InvalidRangeError if low > high
-      end
+      raise InvalidRangeError if (low && high) && low > high
     end
 end
 
