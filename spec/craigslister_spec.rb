@@ -70,6 +70,7 @@ end
 RSpec.describe Craigslister, '#links' do
   it 'returns an array of all item urls on a query page' do
     hondas = Craigslister.new(item: 'Honda CBR', low: 2000, high: 6000)
+    hondas.url = "../test_page.html"
 
     expect(hondas.links.count).to eq(100)
     expect(hondas.links[0]).to eq("/eby/mcd/5274935295.html")
