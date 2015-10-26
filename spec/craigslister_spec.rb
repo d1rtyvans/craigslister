@@ -32,16 +32,6 @@ class Tester < Craigslister
 end
 
 
-# image: @mech.page.images[0].src,
-# title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-# price: @mech.page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-# location: @mech.page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-# description: @mech.page.at('section#postingbody').text
-
-# @mech.get(link)
-# @results << Item.new(scrape_item_data) rescue p 'no image'
-
-
 
 RSpec.describe Craigslister do
   it 'creates an instance of Mechanize' do
