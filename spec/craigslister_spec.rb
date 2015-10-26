@@ -45,3 +45,10 @@ RSpec.describe Craigslister, '#url' do
     end
   end
 end
+
+
+
+
+RSpec.describe Craigslister, '#links' do
+  
+end
