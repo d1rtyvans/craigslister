@@ -1,5 +1,8 @@
 require 'mechanize'
 
+class InvalidRangeError < StandardError
+end
+
 class Craigslister
   attr_reader :area, :item, :high, :low
   attr_writer :url # only for tests
@@ -9,6 +12,8 @@ class Craigslister
     @item = args.fetch(:item)
     @high = args.fetch(:high, nil)
     @low  = args.fetch(:low, nil)
+    validate_price_range
+
     @mech = Mechanize.new
     configure_mech
   end
@@ -40,6 +45,12 @@ class Craigslister
     def configure_mech
       @mech.robots = false
       @mech.user_agent_alias = 'Mac Safari'
+    end
+
+    def validate_price_range
+      if low && high
+        raise InvalidRangeError if low > high
+      end
     end
 end
 

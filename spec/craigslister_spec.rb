@@ -4,13 +4,19 @@ require_relative '../craigslister'
 
 
 RSpec.describe Craigslister do
-  context 'upon initialization' do
-    it 'creates an instance of Mechanize' do
-      allow(Mechanize).to receive(:new).and_return(Mechanize.new)
+  it 'creates an instance of Mechanize' do
+    allow(Mechanize).to receive(:new).and_return(Mechanize.new)
 
-      kewl_thing = Craigslister.new(item: 'kewl thing')
+    kewl_thing = Craigslister.new(item: 'kewl thing')
 
-      expect(Mechanize).to have_received(:new)
+    expect(Mechanize).to have_received(:new)
+  end
+
+  context 'when given invalid price range' do
+    it 'raises an error' do
+      expect{
+        Craigslister.new(item: 'srsly', low: 8000, high: 1)
+      }.to raise_error{InvalidRangeError}
     end
   end
 end
@@ -75,4 +81,10 @@ RSpec.describe Craigslister, '#links' do
     expect(hondas.links.count).to eq(100)
     expect(hondas.links[0]).to eq("/eby/mcd/5274935295.html")
   end
+end
+
+
+
+RSpec.describe Craigslister, '#results' do
+  it ''
 end
