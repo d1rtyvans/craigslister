@@ -100,5 +100,15 @@ end
 
 
 RSpec.describe Craigslister, '#results' do
-  # it 'returns an array of "Items" '
+  it 'returns an array of "Items"' do
+    hondas = Craigslister.new(item: 'Honda CBR', low: 2000, high: 6000)
+    hondas.scrape
+
+    # expect(hondas.results.count).to eq(4)
+    expect(hondas.results.count).to eq(92)
+    expect(hondas.results[0].title).to eq("2015 Honda CBR® 300R")
+    expect(hondas.results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
+    expect(hondas.results[0].price).to eq(4399)
+    expect(hondas.results[0].location).to eq("vallejo / benicia")
+  end
 end
