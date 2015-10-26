@@ -5,7 +5,6 @@ end
 
 class Craigslister
   attr_reader :area, :item, :high, :low
-  attr_writer :url # used in order to decouple tests from craigslist site
 
   def initialize args
     @area = args.fetch(:area, 'sfbay')
@@ -29,6 +28,7 @@ class Craigslister
     @mech.get(url)
     @mech.page.search('.hdrlnk').map {|link| link['href']}
   end
+
 
   private
     def base_url

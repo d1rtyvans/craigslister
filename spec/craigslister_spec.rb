@@ -2,6 +2,21 @@ require 'spec_helper'
 require_relative '../craigslister'
 
 
+# stubs #url and #links so that Craigslister can be tested
+  # seperate from the live website... couldn't come up with
+  # a better way to do this
+class Tester < Craigslister
+  def url
+    "#{Dir.pwd}/test_page.html"
+  end
+
+  def links
+    page = Nokogiri::HTML(open(url))
+    page.css('.hdrlnk').map {|link| link['href']}
+  end
+end
+
+
 
 RSpec.describe Craigslister do
   it 'creates an instance of Mechanize' do
@@ -75,10 +90,9 @@ end
 
 RSpec.describe Craigslister, '#links' do
   it 'returns an array of all item urls on a query page' do
-    hondas = Craigslister.new(item: 'Honda CBR', low: 2000, high: 6000)
-    hondas.url = "../test_page.html"
+    hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
 
-    expect(hondas.links.count).to eq(100)
+    expect(hondas.links.count).to eq(4)
     expect(hondas.links[0]).to eq("/eby/mcd/5274935295.html")
   end
 end
