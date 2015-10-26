@@ -19,10 +19,11 @@ class Craigslister
     def price_query
       if high && low
         "min_price=#{low}&max_price=#{high}&"
+      elsif high
+        "max_price=#{high}&"
       end
 
-      # "https://sfbay.craigslist.org/search/
-      # sss?sort=rel&min_price=200&max_price=2000&query=big+tv"
+      # https://sfbay.craigslist.org/search/sss?sort=rel&max_price=6000&query=bigger+tv
 
 
     end
