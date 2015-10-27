@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../craigslister'
+require_relative '../lib/craigslister'
 
 
 RSpec.describe Craigslister do
@@ -76,7 +76,7 @@ end
   # a better way to do this
 class Tester < Craigslister
   def url
-    "#{Dir.pwd}/test_page.html"
+    "#{Dir.pwd}/spec/test_page.html"
   end
 
   def links
@@ -110,7 +110,7 @@ RSpec.describe Craigslister, '#links' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
 
     expect(hondas.links.count).to eq(4)
-    expect(hondas.links[0]).to eq("./fake_item_1.html")
+    expect(hondas.links[0]).to eq("./spec/fake_item_1.html")
   end
 end
 
@@ -125,6 +125,6 @@ RSpec.describe Craigslister, '#results' do
     expect(hondas.results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
     expect(hondas.results[0].price).to eq(4399)
     expect(hondas.results[0].location).to eq("vallejo / benicia")
-    expect(hondas.results[0].url).to eq('./fake_item_1.html')
+    expect(hondas.results[0].url).to eq('./spec/fake_item_1.html')
   end
 end
