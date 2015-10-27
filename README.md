@@ -20,8 +20,16 @@ couches = Craigslister.new(
 
 couches.scrape # scrapes craigslist for matching items
 couches.results # returns an array of item objects from scrape
-
-# => [#<Item:0x007f8cfbb2a860 @title="Patterned cloth and solid wood couch",
-#     @image="http://images.craigslist.org/00S0S_jSLgjpOqOgw_600x450.jpg", 
-#     @price=600, @location="Sun City">, ...]
+```
+Item objects
+```ruby
+item = couches.results[0]
+item.title
+#=> "Patterned cloth couch" 
+item.image
+#=> "http://images.craigslist.org/00S0S_jSLgjpOqOgw_600x450.jpg"
+item.price
+#=> 600
+item.location
+#=> "Sun City"
 ```
