@@ -7,11 +7,11 @@ class Craigslister
   attr_reader :area, :item, :high, :low, :results
 
   def initialize args
-    @results = []
-    @area = args.fetch(:area, 'sfbay')
-    @item = args[:item]
-    @high = args.fetch(:high, nil)
-    @low  = args.fetch(:low, nil)
+    @results        = []
+    @area           = args.fetch(:area, 'sfbay')
+    @item           = args[:item]
+    @high           = args.fetch(:high, nil)
+    @low            = args.fetch(:low, nil)
     validate_price_range
 
     @mech = Mechanize.new
@@ -42,12 +42,12 @@ class Craigslister
 
     def get_data_from link
       @mech.get(link)
-      @results << Item.new(scrape_item_data) rescue p 'no image'
+      @results << Item.new(scrape_item_data) rescue p 'bad data'
     end
 
-    def scrape_item_data
+    def scrape_item_data need_image=true
       {
-        image: @mech.page.images[0].src,
+        image: (need_image and @mech.page.images[0].src),
         title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
         price: @mech.page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
         location: @mech.page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
