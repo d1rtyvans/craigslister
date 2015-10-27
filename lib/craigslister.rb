@@ -18,10 +18,8 @@ class Craigslister
     configure_mech
   end
 
-  def scrape
-    links.each do |link|
-      get_data_from(link)
-    end
+  def scrape!
+    links.map {|link| get_data_from(link)}.compact
   end
 
   def url
