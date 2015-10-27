@@ -77,13 +77,14 @@ class Craigslister
 end
 
 class Item
-  attr_reader :title, :image, :price, :location
+  attr_reader :title, :image, :price, :location, :url
 
   def initialize args
-    @title = args[:title]
-    @image = args[:image]
-    @price = args[:price]
+    @title    = args[:title]
+    @image    = args[:image]
+    @price    = args[:price]
     @location = args[:location]
+    @url      = args[:url]
   end
 end
 

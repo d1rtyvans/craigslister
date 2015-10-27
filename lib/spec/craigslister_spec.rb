@@ -11,7 +11,7 @@ RSpec.describe Craigslister do
     expect(Mechanize).to have_received(:new)
   end
 
-  context 'when given invalid price range' do
+  context 'when given an invalid price range' do
     it 'raises an error' do
       expect{
         Craigslister.new(item: 'srsly', low: 8000, high: 1)
@@ -86,16 +86,17 @@ class Tester < Craigslister
 
   def get_data_from link
     page = Nokogiri::HTML(open(link))
-    @results << Item.new(scrape_item_data_from(page))
+    @results << Item.new(scrape_item_data_from(page, link))
   end
 
-  def scrape_item_data_from page
+  def scrape_item_data_from page, url
     {
       image: page.css('img')[0]['src'],
       title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
       price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
       location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-      description: page.at('section#postingbody').text
+      description: page.at('section#postingbody').text,
+      url: url
     }
   end
 end
@@ -124,5 +125,6 @@ RSpec.describe Craigslister, '#results' do
     expect(hondas.results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
     expect(hondas.results[0].price).to eq(4399)
     expect(hondas.results[0].location).to eq("vallejo / benicia")
+    expect(hondas.results[0].url).to eq('./fake_item_1.html')
   end
 end
