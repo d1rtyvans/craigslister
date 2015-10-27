@@ -27,7 +27,7 @@ class Craigslister
   end
 
   def url
-    "#{base_url}"\
+    "#{base_url}/"\
     "search/sss?sort=rel&"\
     "#{price_query}"\
     "query=#{item.downcase.split(' ') * '+'}"\
@@ -41,21 +41,22 @@ class Craigslister
 
   private
     def base_url
-      "https://#{area}.craigslist.org/"
+      "https://#{area}.craigslist.org"
     end
 
     def get_data_from link
       @mech.get(link)
-      @results << Item.new(scrape_item_data) rescue p 'bad data'
+      @results << Item.new(scrape_item_data(link)) rescue p 'No Image'
     end
 
-    def scrape_item_data
+    def scrape_item_data url
       {
         image: @mech.page.images[0].src,
         title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
         price: @mech.page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
         location: @mech.page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-        description: @mech.page.at('section#postingbody').text
+        description: @mech.page.at('section#postingbody').text,
+        url: "#{base_url}#{url}"
       }
     end
 
