@@ -23,15 +23,15 @@ couches.results # once items have been scraped, use #results to access matching 
 ```
 Item objects
 ```ruby
-item = couches.results[0]
-item.title
+couch = couches.results[0]
+couch.title
 #=> "Patterned cloth and solid wood couch" 
-item.image
+couch.image
 #=> "http://images.craigslist.org/00S0S_jSLgjpOqOgw_600x450.jpg"
-item.price
+couch.price
 #=> 600
-item.location
+couch.location
 #=> "Sun City"
-item.url
+couch.url
 #=> "https://austin.craigslist.org/fuo/5279693770.html"
 ```
