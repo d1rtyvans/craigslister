@@ -1,3 +1,7 @@
+# Add Item#url
+# organize spec files
+# figure out how to run spec from any folder
+
 require 'mechanize'
 
 class InvalidRangeError < StandardError
@@ -45,9 +49,9 @@ class Craigslister
       @results << Item.new(scrape_item_data) rescue p 'bad data'
     end
 
-    def scrape_item_data need_image=true
+    def scrape_item_data
       {
-        image: (need_image and @mech.page.images[0].src),
+        image: @mech.page.images[0].src,
         title: @mech.page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
         price: @mech.page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
         location: @mech.page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
