@@ -5,7 +5,7 @@ gem install craigslister
 ```
 Gemfile
 ```ruby
-gem 'craigslister
+gem 'craigslister'
 ```
 
 ## Use
