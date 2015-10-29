@@ -84,7 +84,7 @@ class Tester < Craigslister
     page.css('.hdrlnk').map {|link| link['href']}
   end
 
-  def get_data_from link
+  def get_data_from link, index
     page = Nokogiri::HTML(open(link))
     @results << Item.new(scrape_item_data_from(page, link))
   end

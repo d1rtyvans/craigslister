@@ -1,7 +1,3 @@
-# Add Item#url
-# organize spec files
-# figure out how to run spec from any folder
-
 require 'mechanize'
 
 class InvalidRangeError < StandardError
@@ -23,7 +19,8 @@ class Craigslister
   end
 
   def scrape!
-    links.map {|link| get_data_from(link)}
+    links.each_with_index {|link, index| get_data_from(link, index)}
+    results
   end
 
   def url
@@ -44,9 +41,9 @@ class Craigslister
       "https://#{area}.craigslist.org"
     end
 
-    def get_data_from link
+    def get_data_from link, index
       @mech.get(link)
-      @results << Item.new(scrape_item_data(link)) rescue p 'No Image'
+      @results << Item.new(scrape_item_data(link)) rescue puts "No image for post ##{index+1}"
     end
 
     def scrape_item_data url
@@ -73,7 +70,7 @@ class Craigslister
     end
 
     def validate_price_range
-      raise InvalidRangeError if (low && high) && low > high
+      raise InvalidRangeError if low && high && low > high
     end
 end
 
