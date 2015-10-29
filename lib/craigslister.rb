@@ -23,14 +23,14 @@ class Craigslister
   end
 
   def scrape!
-    links.map {|link| get_data_from(link)}.compact
+    links.map {|link| get_data_from(link)}
   end
 
   def url
     "#{base_url}/"\
     "search/sss?sort=rel&"\
     "#{price_query}"\
-    "query=#{item.downcase.split(' ') * '+'}"\
+    "query=#{item.downcase.split(' ') * '+'}"
   end
 
   def links
