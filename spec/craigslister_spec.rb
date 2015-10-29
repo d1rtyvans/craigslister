@@ -3,14 +3,6 @@ require_relative '../lib/craigslister'
 
 
 RSpec.describe Craigslister do
-  it 'creates an instance of Mechanize' do
-    allow(Mechanize).to receive(:new).and_return(Mechanize.new)
-
-    kewl_thing = Craigslister.new(item: 'kewl thing')
-
-    expect(Mechanize).to have_received(:new)
-  end
-
   context 'when given an invalid price range' do
     it 'raises an error' do
       expect{
@@ -69,35 +61,16 @@ RSpec.describe Craigslister, '#url' do
 end
 
 
-
-
-# stubs #url and #links so that Craigslister can be tested
-  # seperate from the live website... couldn't come up with
-  # a better way to do this
+# stubs #url and #base_url so that Craigslister can be tested
+  # locally and be decoupled from craiglist site.
 class Tester < Craigslister
   def url
     "#{Dir.pwd}/spec/test_page.html"
   end
 
-  def links
-    page = Nokogiri::HTML(open(url))
-    page.css('.hdrlnk').map {|link| link['href']}
-  end
-
-  def get_data_from link, index
-    page = Nokogiri::HTML(open(link))
-    @results << Item.new(scrape_item_data_from(page, link))
-  end
-
-  def scrape_item_data_from page, url
-    {
-      image: page.css('img')[0]['src'],
-      title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-      price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-      location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-      description: page.at('section#postingbody').text,
-      url: url
-    }
+  # gets rid of "sfbay.craigslist" in order to test on local file
+  def base_url
+    ""
   end
 end
 
