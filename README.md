@@ -1,6 +1,7 @@
 # Craigslister
+Command Line
 ```ruby
-gem install 'craigslister'
+gem install craigslister
 ```
 Gemfile
 ```ruby
