@@ -44,14 +44,14 @@ class Craigslister
       @results << Item.new(scrape_item_data(page, link)) rescue puts "No image for post ##{index+1}"
     end
 
-    def scrape_item_data page, url
+    def scrape_item_data page, link
       {
         image: page.at('img')['src'],
         title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
         price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
         location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
         description: page.at('section#postingbody').text,
-        url: url
+        url: link
       }
     end
 
@@ -82,8 +82,4 @@ class Item
     @url      = args[:url]
   end
 end
-
-
-# hondas = Craigslister.new(item: 'Honda CBR', low: 6000, high: 9000)
-# hondas.scrape!
 
