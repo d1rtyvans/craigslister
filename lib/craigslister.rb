@@ -1,8 +1,10 @@
 require 'nokogiri'
 require 'open-uri'
 
+
 class InvalidRangeError < StandardError
 end
+
 
 class Craigslister
   attr_reader :area, :item, :high, :low, :results
@@ -17,20 +19,17 @@ class Craigslister
   end
 
   def scrape!
-    links.each_with_index {|link, index| get_data_from(link, index)}
-    results
+    @results = links.map {|link| get_data_from(link)}.compact
   end
 
   def url
-    "#{base_url}/"\
-    "search/sss?sort=rel&"\
-    "#{price_query}"\
-    "query=#{item.downcase.split(' ') * '+'}"
+    "#{base_url}/search/sss?sort=rel&"\
+    "#{price_query}query="\
+    "#{item.downcase.split(' ') * '+'}"
   end
 
   def links
-    page = Nokogiri::HTML(open(url))
-    page.css('.hdrlnk').map {|link| format_link(link)}
+    page_from(url).css('.hdrlnk').map {|link| format_link(link)}
   end
 
 
@@ -39,20 +38,8 @@ class Craigslister
       "https://#{area}.craigslist.org"
     end
 
-    def get_data_from link, index
-      page = Nokogiri::HTML(open(link))
-      @results << Item.new(scrape_item_data(page, link)) rescue puts "No image for post ##{index+1}"
-    end
-
-    def scrape_item_data page, link
-      {
-        image: page.at('img')['src'],
-        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-        price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-        location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-        description: page.at('section#postingbody').text,
-        url: link
-      }
+    def page_from url
+      Nokogiri::HTML(open(url))
     end
 
     def format_link link
@@ -69,7 +56,29 @@ class Craigslister
     def validate_price_range
       raise InvalidRangeError if low && high && low > high
     end
+    
+
+    def get_data_from link
+      item_data = scrape_item_data(page_from(link), link)
+      Item.new(item_data) if item_data
+    end
+
+    def scrape_item_data page, link
+      {
+        image: page.at('img')['src'],
+        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+        price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
+        location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
+        description: page.at('section#postingbody').text,
+        url: link
+      }
+    rescue
+      puts "Found post with no image."
+    end
+
 end
+
+
 
 class Item
   attr_reader :title, :image, :price, :location, :url
@@ -82,4 +91,3 @@ class Item
     @url      = args[:url]
   end
 end
-

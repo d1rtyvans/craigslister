@@ -74,7 +74,7 @@ end
 
 
 
-
+# Add test for no image
 
 RSpec.describe Craigslister, '#links' do
   it 'returns an array of all item urls on a query page' do
