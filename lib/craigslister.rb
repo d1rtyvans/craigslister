@@ -19,7 +19,7 @@ class Craigslister
   end
 
   def scrape!
-    @results = links.map {|link| get_data_from(link)}.compact
+    @results = links.map {|link| item_from(link)}.compact
   end
 
   def url
@@ -58,7 +58,7 @@ class Craigslister
     end
     
 
-    def get_data_from link
+    def item_from link
       item_data = scrape_item_data(page_from(link), link)
       Item.new(item_data) if item_data
     end
