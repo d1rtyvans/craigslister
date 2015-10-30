@@ -28,11 +28,9 @@ class Craigslister
     "query=#{item.downcase.split(' ') * '+'}"
   end
 
-  def links # grabs all links from the initial craigslist search page
+  def links
     page = Nokogiri::HTML(open(url))
-    page.css('.hdrlnk').map do |link|
-      link['href'] =~ /\w+\.craig/ ? "https:" + link['href'] : base_url + link['href'] # formats out of town links
-    end
+    page.css('.hdrlnk').map {|link| format_link(link)}
   end
 
 
@@ -55,6 +53,10 @@ class Craigslister
         description: page.at('section#postingbody').text,
         url: url
       }
+    end
+
+    def format_link link
+      link['href'] =~ /\w+\.craig/ ? "https:" + link['href'] : base_url + link['href']
     end
 
     def price_query
@@ -80,4 +82,8 @@ class Item
     @url      = args[:url]
   end
 end
+
+
+# hondas = Craigslister.new(item: 'Honda CBR', low: 6000, high: 9000)
+# hondas.scrape!
 
