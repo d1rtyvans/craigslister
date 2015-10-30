@@ -28,11 +28,10 @@ class Craigslister
     "query=#{item.downcase.split(' ') * '+'}"
   end
 
-  def links
+  def links # grabs all links from the initial craigslist search page
     page = Nokogiri::HTML(open(url))
     page.css('.hdrlnk').map do |link|
-      # formats out of town links, otherwise use base_url + link
-      link['href'] =~ /\w+\.craig/ ? "https:" + link['href'] : base_url + link['href']
+      link['href'] =~ /\w+\.craig/ ? "https:" + link['href'] : base_url + link['href'] # formats out of town links
     end
   end
 
