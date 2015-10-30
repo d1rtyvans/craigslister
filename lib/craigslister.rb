@@ -22,14 +22,14 @@ class Craigslister
     @results = links.map {|link| item_from(link)}.compact
   end
 
+  def links
+    page_from(url).css('.hdrlnk').map {|link| format_link(link)}
+  end
+
   def url
     "#{base_url}/search/sss?sort=rel&"\
     "#{price_query}query="\
     "#{item.downcase.split(' ') * '+'}"
-  end
-
-  def links
-    page_from(url).css('.hdrlnk').map {|link| format_link(link)}
   end
 
 
