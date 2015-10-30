@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative '../lib/craigslister'
 
 
-RSpec.describe Craigslister do
+RSpec.describe Craigslister, '#new' do
   context 'when given an invalid price range' do
     it 'raises an error' do
       expect{
