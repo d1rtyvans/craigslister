@@ -61,14 +61,13 @@ RSpec.describe Craigslister, '#url' do
 end
 
 
-# stubs #url and #base_url so that Craigslister can be tested
-  # locally and be decoupled from craiglist site.
+# Tester stubs #url and #base_url so that Craigslister can be tested
+# locally and be decoupled from craiglist site.
 class Tester < Craigslister
   def url
-    "#{Dir.pwd}/spec/test_page.html"
+    File.expand_path("test_page.html", File.dirname(__FILE__))
   end
 
-  # gets rid of "sfbay.craigslist" in order to test on local file
   def base_url
     ""
   end
