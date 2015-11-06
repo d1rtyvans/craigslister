@@ -87,7 +87,7 @@ class Craigslister
     	if location = page.at('span.postingtitletext small')
         location.text.gsub(/ ?[\(\)]/,'')
     	else
-         false
+        false
     	end	
     end
 end
