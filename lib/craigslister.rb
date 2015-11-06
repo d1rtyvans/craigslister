@@ -55,34 +55,19 @@ class Craigslister
     def validate_price_range
       raise InvalidRangeError if low && high && low > high
     end
-    
 
     def item_from link
-      # item_data = scrape_item_data(page_from(link), link)
-      # Item.new(item_data) if item_data
-			p scrape_item_data(page_from(link), link)
-    end
-
-    def scrape_item_data page, link
-      {
-        image: page.at('img')['src'],
-        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-        price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-        location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-        description: page.at('section#postingbody').text,
-        url: link
-      }
-    rescue
-      puts "Found post with no image."
+			Item.new(get_item_data(page_from(link), link))
     end
 		
-		# abstract singular scraping so that errors can be rescued individually?
-		def scrape_item_data page, link
+		def get_item_data page, link
 			data = {}
 			data[:image] = scrape_image(page)
 			data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
 			data[:price] = scrape_price(page) 
 			data[:location] = scrape_location(page)
+			data[:description] = page.at('section#postingbody').text
+			data[:url] = link
 			data
 		end
 
@@ -120,7 +105,3 @@ class Item
     @url      = args[:url]
   end
 end
-
-
-hondas = Craigslister.new(item: 'Honda CBR')
-hondas.scrape!
