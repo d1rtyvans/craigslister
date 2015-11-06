@@ -58,8 +58,9 @@ class Craigslister
     
 
     def item_from link
-      item_data = scrape_item_data(page_from(link), link)
-      Item.new(item_data) if item_data
+      # item_data = scrape_item_data(page_from(link), link)
+      # Item.new(item_data) if item_data
+			p scrape_item_data(page_from(link), link)
     end
 
     def scrape_item_data page, link
@@ -74,6 +75,18 @@ class Craigslister
     rescue
       puts "Found post with no image."
     end
+		
+		# abstract singular scraping so that errors can be rescued individually?
+		def scrape_item_data page, link
+			data = {}
+			data[:image] = scrape_image(page)
+			data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
+			data
+		end
+
+		def scrape_image page
+			page.at('img') ? page.at('img')['src'] : false
+		end
 
 end
 
@@ -90,3 +103,7 @@ class Item
     @url      = args[:url]
   end
 end
+
+
+hondas = Craigslister.new(item: 'Honda CBR')
+hondas.scrape!
