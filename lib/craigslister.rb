@@ -10,7 +10,6 @@ class Craigslister
   attr_reader :area, :item, :high, :low, :results
 
   def initialize args
-    @results = []
     @area    = args.fetch(:area, 'sfbay')
     @item    = args[:item]
     @high    = args.fetch(:high, nil)
@@ -19,7 +18,7 @@ class Craigslister
   end
 
   def scrape!
-    @results = links.map {|link| item_from(link)}.compact
+    links.map {|link| item_from(link)}.compact
   end
 
   def links
