@@ -77,17 +77,17 @@ class Craigslister
     
     def scrape_price page
     	if price = page.at('span.postingtitletext span.price')
-    		price.text.gsub(/\$/,'').to_i
+        price.text.gsub(/\$/,'').to_i
     	else
-    		false
+        false
     	end	
     end
 
     def scrape_location page
     	if location = page.at('span.postingtitletext small')
-    		location.text.gsub(/ ?[\(\)]/,'')
+        location.text.gsub(/ ?[\(\)]/,'')
     	else
-    		false
+         false
     	end	
     end
 end
