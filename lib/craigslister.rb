@@ -81,13 +81,30 @@ class Craigslister
 			data = {}
 			data[:image] = scrape_image(page)
 			data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
+			data[:price] = scrape_price(page) 
+			data[:location] = scrape_location(page)
 			data
 		end
 
 		def scrape_image page
 			page.at('img') ? page.at('img')['src'] : false
 		end
+		
+		def scrape_price page
+			if price = page.at('span.postingtitletext span.price')
+				price.text.gsub(/\$/,'').to_i
+			else
+				false
+			end	
+		end
 
+		def scrape_location page
+			if location = page.at('span.postingtitletext small')
+				location.text.gsub(/ ?[\(\)]/,'')
+			else
+				false
+			end	
+		end
 end
 
 
