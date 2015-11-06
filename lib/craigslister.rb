@@ -61,14 +61,14 @@ class Craigslister
     end
 
     def get_item_data page, link
-      data = {}
-      data[:image] = scrape_image(page)
-      data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
-      data[:price] = scrape_price(page)
-      data[:location] = scrape_location(page)
-      data[:description] = page.at('section#postingbody').text
-      data[:url] = link
-      data
+      {
+        image: scrape_image(page),
+        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+        price: scrape_price(page),
+        location: scrape_location(page),
+        description: page.at('section#postingbody').text,
+        url: link
+      }
     end
 
     def scrape_image page
