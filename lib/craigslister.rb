@@ -10,7 +10,6 @@ class Craigslister
   attr_reader :area, :item, :high, :low, :results
 
   def initialize args
-    @results = []
     @area    = args.fetch(:area, 'sfbay')
     @item    = args[:item]
     @high    = args.fetch(:high, nil)
@@ -19,7 +18,7 @@ class Craigslister
   end
 
   def scrape!
-    @results = links.map {|link| item_from(link)}.compact
+    links.map {|link| item_from(link)}.compact
   end
 
   def links
@@ -56,26 +55,41 @@ class Craigslister
     def validate_price_range
       raise InvalidRangeError if low && high && low > high
     end
-    
 
     def item_from link
-      item_data = scrape_item_data(page_from(link), link)
-      Item.new(item_data) if item_data
+      Item.new(get_item_data(page_from(link), link))
     end
 
-    def scrape_item_data page, link
-      {
-        image: page.at('img')['src'],
-        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
-        price: page.at('span.postingtitletext span.price').text.gsub(/\$/,'').to_i,
-        location: page.at('span.postingtitletext small').text.gsub(/ ?[\(\)]/,''),
-        description: page.at('section#postingbody').text,
-        url: link
-      }
-    rescue
-      puts "Found post with no image."
+    def get_item_data page, link
+      data = {}
+      data[:image] = scrape_image(page)
+      data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
+      data[:price] = scrape_price(page)
+      data[:location] = scrape_location(page)
+      data[:description] = page.at('section#postingbody').text
+      data[:url] = link
+      data
     end
 
+    def scrape_image page
+      page.at('img') ? page.at('img')['src'] : false
+    end
+
+    def scrape_price page
+      if price = page.at('span.postingtitletext span.price')
+        price.text.gsub(/\$/,'').to_i
+      else
+        false
+      end
+    end
+
+    def scrape_location page
+      if location = page.at('span.postingtitletext small')
+        location.text.gsub(/ ?[\(\)]/,'')
+      else
+        false
+      end
+    end
 end
 
 
@@ -91,3 +105,5 @@ class Item
     @url      = args[:url]
   end
 end
+
+  # THIS BETTER BE TABBED CORRECTLY BRO

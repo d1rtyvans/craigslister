@@ -89,13 +89,13 @@ end
 RSpec.describe Craigslister, '#results' do
   it 'returns an array of "Items"' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
-    hondas.scrape!
+    results = hondas.scrape!
 
-    expect(hondas.results.count).to eq(4)
-    expect(hondas.results[0].title).to eq("2015 Honda CBRÂ® 300R")
-    expect(hondas.results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
-    expect(hondas.results[0].price).to eq(4399)
-    expect(hondas.results[0].location).to eq("vallejo / benicia")
-    expect(hondas.results[0].url).to eq('./spec/fake_item_1.html')
+    expect(results.count).to eq(4)
+    expect(results[0].title).to eq("2015 Honda CBRÂ® 300R")
+    expect(results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
+    expect(results[0].price).to eq(4399)
+    expect(results[0].location).to eq("vallejo / benicia")
+    expect(results[0].url).to eq('./spec/fake_item_1.html')
   end
 end
