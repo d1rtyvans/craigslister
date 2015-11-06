@@ -57,39 +57,39 @@ class Craigslister
     end
 
     def item_from link
-  		Item.new(get_item_data(page_from(link), link))
+    	Item.new(get_item_data(page_from(link), link))
     end
-  	
-  	def get_item_data page, link
-  		data = {}
-  		data[:image] = scrape_image(page)
-  		data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
-  		data[:price] = scrape_price(page) 
-  		data[:location] = scrape_location(page)
-  		data[:description] = page.at('section#postingbody').text
-  		data[:url] = link
-  		data
-  	end
+    
+    def get_item_data page, link
+    	data = {}
+    	data[:image] = scrape_image(page)
+    	data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
+    	data[:price] = scrape_price(page) 
+    	data[:location] = scrape_location(page)
+    	data[:description] = page.at('section#postingbody').text
+    	data[:url] = link
+    	data
+    end
 
-  	def scrape_image page
-  		page.at('img') ? page.at('img')['src'] : false
-  	end
-  	
-  	def scrape_price page
-  		if price = page.at('span.postingtitletext span.price')
-  			price.text.gsub(/\$/,'').to_i
-  		else
-  			false
-  		end	
-  	end
+    def scrape_image page
+    	page.at('img') ? page.at('img')['src'] : false
+    end
+    
+    def scrape_price page
+    	if price = page.at('span.postingtitletext span.price')
+    		price.text.gsub(/\$/,'').to_i
+    	else
+    		false
+    	end	
+    end
 
-  	def scrape_location page
-  		if location = page.at('span.postingtitletext small')
-  			location.text.gsub(/ ?[\(\)]/,'')
-  		else
-  			false
-  		end	
-  	end
+    def scrape_location page
+    	if location = page.at('span.postingtitletext small')
+    		location.text.gsub(/ ?[\(\)]/,'')
+    	else
+    		false
+    	end	
+    end
 end
 
 
@@ -106,4 +106,4 @@ class Item
   end
 end
 
-	# THIS BETTER BE TABBED CORRECTLY BRO
+  # THIS BETTER BE TABBED CORRECTLY BRO
