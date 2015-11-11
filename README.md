@@ -1,9 +1,10 @@
 # Craigslister
-Command Line
+Ever found yourself wishing Craigslist had an api? Craigslister is here to save the day. Use Craigslister and scrape Craigslist for its data in neatly packaged Item objects. All you need is the name of an item!
+#### Command Line
 ```ruby
 gem install craigslister
 ```
-Gemfile
+#### Gemfile
 ```ruby
 gem 'craigslister'
 ```
@@ -19,12 +20,11 @@ couches = Craigslister.new(
   high: 2000, #optional (maximum price range)
 )
 
-couches.scrape! # scrapes craigslist and returns array of matching items
-couches.results # once items have been scraped, use #results to access matching items
+result = couches.scrape! # scrapes craigslist and returns array of matching items
 ```
 Item objects
 ```ruby
-couch = couches.results[0]
+couch = results[0]
 couch.title
 #=> "Patterned cloth and solid wood couch" 
 couch.image
@@ -35,4 +35,6 @@ couch.location
 #=> "Sun City"
 couch.url
 #=> "https://austin.craigslist.org/fuo/5279693770.html"
+couch.description
+#=> "Totally awesome couch! You should buy it! Blah, blah, blah."
 ```
