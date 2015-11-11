@@ -7,7 +7,7 @@ end
 
 
 class Craigslister
-  attr_reader :area, :item, :high, :low, :results
+  attr_reader :area, :item, :high, :low
 
   def initialize args
     @area    = args.fetch(:area, 'sfbay')
