@@ -79,7 +79,7 @@ class Craigslister
       if price = page.at('span.postingtitletext span.price')
         price.text.gsub(/\$/,'').to_i
       else
-        false
+        0
       end
     end
 
