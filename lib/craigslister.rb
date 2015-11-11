@@ -105,5 +105,3 @@ class Item
     @url      = args[:url]
   end
 end
-
-  # THIS BETTER BE TABBED CORRECTLY BRO

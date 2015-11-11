@@ -73,9 +73,6 @@ class Tester < Craigslister
 end
 
 
-
-# Add test for no image
-
   
 
 RSpec.describe Craigslister, '#results' do
