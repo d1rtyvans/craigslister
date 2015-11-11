@@ -64,7 +64,7 @@ end
 # locally and be decoupled from craiglist site.
 class Tester < Craigslister
   def url
-    File.expand_path("test_page.html", File.dirname(__FILE__))
+    File.expand_path('test_page.html', File.dirname(__FILE__))
   end
 
   def base_url
@@ -73,29 +73,39 @@ class Tester < Craigslister
 end
 
 
-
-# Add test for no image
-
-RSpec.describe Craigslister, '#links' do
-  it 'returns an array of all item urls on a query page' do
-    hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
-
-    expect(hondas.links.count).to eq(4)
-    expect(hondas.links[0]).to eq("./spec/fake_item_1.html")
-  end
-end
-
+  
 
 RSpec.describe Craigslister, '#results' do
   it 'returns an array of "Items"' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
+    
     results = hondas.scrape!
 
     expect(results.count).to eq(4)
-    expect(results[0].title).to eq("2015 Honda CBRÂ® 300R")
-    expect(results[0].image).to eq("http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg")
+    expect(results[0].title).to eq('2015 Honda CBRÂ® 300R')
+    expect(results[0].image).to eq('http://images.craigslist.org/00U0U_j8CHhaGW9Ze_600x450.jpg')
     expect(results[0].price).to eq(4399)
-    expect(results[0].location).to eq("vallejo / benicia")
+    expect(results[0].location).to eq('vallejo / benicia')
     expect(results[0].url).to eq('./spec/fake_item_1.html')
+  end
+end
+
+RSpec.describe Craigslister, '#links' do
+  it 'returns an array of all item urls on a query page' do
+    hondas = Tester.new(item: 'Honda CBR')
+
+    expect(hondas.links.count).to eq(4)
+    expect(hondas.links[0]).to eq('./spec/fake_item_1.html')
+  end
+
+  it 'formats links for items out of area' do
+    lamps = Tester.new(item: 'Couch')
+    # stubs url to use link_test.html
+    def lamps.url
+      File.expand_path('link_test.html', File.dirname(__FILE__))
+    end
+
+    expect(lamps.links[0]).to eq('https://stockton.craigslist.org/mpo/5239962444.html')
+    expect(lamps.links[1]).to eq('/sfc/mcy/5269260568.html')
   end
 end

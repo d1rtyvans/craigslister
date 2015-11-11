@@ -61,25 +61,25 @@ class Craigslister
     end
 
     def get_item_data page, link
-      data = {}
-      data[:image] = scrape_image(page)
-      data[:title] = page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
-      data[:price] = scrape_price(page)
-      data[:location] = scrape_location(page)
-      data[:description] = page.at('section#postingbody').text
-      data[:url] = link
-      data
+      {
+        image: scrape_image(page),
+        title: page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, ''),
+        price: scrape_price(page),
+        location: scrape_location(page),
+        description: page.at('section#postingbody').text,
+        url: link
+      }
     end
 
     def scrape_image page
-      page.at('img') ? page.at('img')['src'] : false
+      page.at('img') ? page.at('img')['src'] : ""
     end
 
     def scrape_price page
       if price = page.at('span.postingtitletext span.price')
         price.text.gsub(/\$/,'').to_i
       else
-        false
+        0
       end
     end
 
@@ -87,7 +87,7 @@ class Craigslister
       if location = page.at('span.postingtitletext small')
         location.text.gsub(/ ?[\(\)]/,'')
       else
-        false
+        ""
       end
     end
 end
@@ -105,5 +105,3 @@ class Item
     @url      = args[:url]
   end
 end
-
-  # THIS BETTER BE TABBED CORRECTLY BRO
