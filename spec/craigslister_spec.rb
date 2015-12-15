@@ -1,18 +1,14 @@
 require_relative '../lib/craigslister'
 
-
 RSpec.describe Craigslister, '#new' do
   context 'when given an invalid price range' do
     it 'raises an error' do
-      expect{
+      expect do
         Craigslister.new(item: 'srsly', low: 8000, high: 1)
-      }.to raise_error{InvalidRangeError}
+      end.to raise_error { InvalidRangeError }
     end
   end
 end
-
-
-
 
 RSpec.describe Craigslister, '#url' do
   it 'builds craigslist url from arguments' do
@@ -54,11 +50,10 @@ RSpec.describe Craigslister, '#url' do
       cat_nip = Craigslister.new(item: 'Catnip', low: 200)
 
       expect(cat_nip.url).to eq(
-        "https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip")
+        'https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip')
     end
   end
 end
-
 
 # Tester stubs #url and #base_url so that Craigslister can be tested
 # locally and be decoupled from craiglist site.
@@ -68,17 +63,14 @@ class Tester < Craigslister
   end
 
   def base_url
-    ""
+    ''
   end
 end
-
-
-  
 
 RSpec.describe Craigslister, '#results' do
   it 'returns an array of "Items"' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
-    
+
     results = hondas.scrape!
 
     expect(results.count).to eq(4)
