@@ -8,6 +8,7 @@ class Craigslister
   attr_reader :area, :item, :high, :low
 
   def initialize(args)
+    stuff = "hey guys"
     @area    = args.fetch(:area, 'sfbay')
     @item    = args[:item]
     @high    = args.fetch(:high, nil)
