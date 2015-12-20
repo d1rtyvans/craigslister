@@ -1,4 +1,4 @@
-require 'nokogiri'
+require "nokogiri"
 require 'open-uri'
 
 class InvalidRangeError < StandardError
