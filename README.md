@@ -1,10 +1,10 @@
 # Craigslister
 Ever found yourself wishing Craigslist had an api? Craigslister is here to save the day. Use Craigslister and scrape Craigslist for its data in neatly packaged Item objects. All you need is the name of an item!
-#### Command Line
+#### RubyGems
 ```ruby
 gem install craigslister
 ```
-#### Gemfile
+#### Bundler
 ```ruby
 gem 'craigslister'
 ```
