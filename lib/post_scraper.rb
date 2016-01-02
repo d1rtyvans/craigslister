@@ -1,3 +1,4 @@
+# Creates Post objects out of an HTML page
 class PostScraper
   def initialize(page, link)
     @page = page
