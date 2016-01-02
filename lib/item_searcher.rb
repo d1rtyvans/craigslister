@@ -1,4 +1,4 @@
-# Houses all logic for interacting with craigslist.org
+# Scrapes craigslist for links related to url
 class ItemSearcher
   def initialize(args)
     @base_url = args[:base_url]
@@ -10,9 +10,7 @@ class ItemSearcher
   end
 
   def links
-    page_from(url).css('.hdrlnk').map do |link|
-      format_link(link['href'])
-    end
+    page_from(url).css('.hdrlnk').map { |link| format_link(link['href']) }
   end
 
   private

@@ -11,7 +11,7 @@ class PostScraper
       title: title,
       price: price,
       location: location,
-      description: page.at('section#postingbody').text,
+      description: description,
       url: link
     )
   end
@@ -31,19 +31,15 @@ class PostScraper
 
   def price
     price = page.at('span.postingtitletext span.price')
-    if price
-      price.text.gsub(/\$/, '').to_i
-    else
-      0
-    end
+    price ? price.text.gsub(/\$/, '').to_i : 0
   end
 
   def location
     location = page.at('span.postingtitletext small')
-    if location
-      location.text.gsub(/ ?[\(\)]/, '')
-    else
-      ''
-    end
+    location ? location.text.gsub(/ ?[\(\)]/, '') : ''
+  end
+
+  def description
+    page.at('section#postingbody').text
   end
 end

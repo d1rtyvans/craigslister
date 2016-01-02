@@ -8,7 +8,7 @@ require_relative './post'
 class InvalidRangeError < StandardError
 end
 
-# Packages items and tells scraper to scrape
+# Creates url from arguments and tells ItemSearcher to scrape
 class Craigslister
   attr_reader :area, :item, :high, :low
 
@@ -40,15 +40,15 @@ class Craigslister
     "https://#{area}.craigslist.org"
   end
 
-  def searcher
-    ItemSearcher.new(base_url: base_url, url: url)
-  end
-
   def price_query
     result = ''
     result += "min_price=#{low}&" if low
     result += "max_price=#{high}&" if high
     result
+  end
+
+  def searcher
+    ItemSearcher.new(base_url: base_url, url: url)
   end
 
   def validate_price_range
