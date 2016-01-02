@@ -71,7 +71,7 @@ RSpec.describe Craigslister, '#results' do
   it 'returns an array of "Items"' do
     hondas = Tester.new(item: 'Honda CBR', low: 2000, high: 6000)
 
-    results = hondas.scrape!
+    results = hondas.scrape
 
     expect(results.count).to eq(4)
     expect(results[0].title).to eq('2015 Honda CBRÂ® 300R')

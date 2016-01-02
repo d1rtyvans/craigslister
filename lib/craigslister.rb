@@ -1,9 +1,14 @@
 require 'nokogiri'
 require 'open-uri'
+require_relative './item_searcher'
+require_relative './post_scraper'
+require_relative './post'
 
+# Thrown when low price is higher than high price
 class InvalidRangeError < StandardError
 end
 
+# Packages items and tells scraper to scrape
 class Craigslister
   attr_reader :area, :item, :high, :low
 
@@ -15,12 +20,12 @@ class Craigslister
     validate_price_range
   end
 
-  def scrape!
-    links.flat_map { |link| item_from(link) }
+  def scrape
+    searcher.scrape
   end
 
   def links
-    page_from(url).css('.hdrlnk').map { |link| format_link(link) }
+    searcher.links
   end
 
   def url
@@ -35,16 +40,8 @@ class Craigslister
     "https://#{area}.craigslist.org"
   end
 
-  def page_from(url)
-    Nokogiri::HTML(open(url))
-  end
-
-  def format_link(link)
-    if link['href'] =~ /\w+\.craig/
-      'https:' + link['href']
-    else
-      base_url + link['href']
-    end
+  def searcher
+    ItemSearcher.new(base_url: base_url, url: url)
   end
 
   def price_query
@@ -56,58 +53,5 @@ class Craigslister
 
   def validate_price_range
     fail InvalidRangeError if low && high && low > high
-  end
-
-  def item_from(link)
-    Item.new(get_item_data(page_from(link), link))
-  end
-
-  def get_item_data(page, link)
-    {
-      image: scrape_image(page),
-      title: scrape_title(page),
-      price: scrape_price(page),
-      location: scrape_location(page),
-      description: page.at('section#postingbody').text,
-      url: link
-    }
-  end
-
-  def scrape_image(page)
-    page.at('img') ? page.at('img')['src'] : ''
-  end
-
-  def scrape_title(page)
-    page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
-  end
-
-  def scrape_price(page)
-    price = page.at('span.postingtitletext span.price')
-    if price
-      price.text.gsub(/\$/, '').to_i
-    else
-      0
-    end
-  end
-
-  def scrape_location(page)
-    location = page.at('span.postingtitletext small')
-    if location
-      location.text.gsub(/ ?[\(\)]/, '')
-    else
-      ''
-    end
-  end
-end
-
-class Item
-  attr_reader :title, :image, :price, :location, :url
-
-  def initialize(args)
-    @title    = args[:title]
-    @image    = args[:image]
-    @price    = args[:price]
-    @location = args[:location]
-    @url      = args[:url]
   end
 end
