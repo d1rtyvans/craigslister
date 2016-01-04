@@ -1,4 +1,4 @@
-# Houses logic for page objects
+# Houses all higher level scraping logic
 module Scraper
   def links
     header_link.map { |link| format_link(link['href']) }
