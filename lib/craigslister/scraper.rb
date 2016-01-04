@@ -19,4 +19,12 @@ module Scraper
   def header_link
     page_from(url).css('.hdrlnk')
   end
+
+  def format_link(link)
+    if link =~ /\w+\.craig/
+      'https:' + link
+    else
+      base_url + link
+    end
+  end
 end

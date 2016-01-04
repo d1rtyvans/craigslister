@@ -35,14 +35,6 @@ class Craigslister
     result
   end
 
-  def format_link(link)
-    if link =~ /\w+\.craig/
-      'https:' + link
-    else
-      base_url + link
-    end
-  end
-
   def validate_price_range
     fail InvalidRangeError if low && high && low > high
   end
