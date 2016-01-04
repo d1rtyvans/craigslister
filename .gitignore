@@ -1,1 +1,3 @@
-lib/.craigslister.rb.swp
+*.swp
+*.swo
+spec/examples.txt
