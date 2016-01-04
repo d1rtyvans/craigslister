@@ -4,6 +4,8 @@ end
 
 # Creates url from arguments and tells ItemSearcher to scrape
 class Craigslister
+  include Scraper
+
   attr_reader :area, :item, :high, :low
 
   def initialize(args)
@@ -12,14 +14,6 @@ class Craigslister
     @high    = args.fetch(:high, nil)
     @low     = args.fetch(:low, nil)
     validate_price_range
-  end
-
-  def scrape
-    searcher.scrape
-  end
-
-  def links
-    searcher.links
   end
 
   def url
@@ -41,8 +35,12 @@ class Craigslister
     result
   end
 
-  def searcher
-    ItemSearcher.new(base_url: base_url, url: url)
+  def format_link(link)
+    if link =~ /\w+\.craig/
+      'https:' + link
+    else
+      base_url + link
+    end
   end
 
   def validate_price_range

@@ -20,22 +20,26 @@ class PostScraper
 
   attr_reader :page, :link
 
+  def posting_title
+    page.at('span.postingtitletext')
+  end
+
   def image
     image = page.at('img')
     image ? image['src'] : ''
   end
 
   def title
-    page.at('span.postingtitletext').text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
+    posting_title.text.gsub(/ ?- ?\$\d+ ?\(.+\)/, '')
   end
 
   def price
-    price = page.at('span.postingtitletext span.price')
+    price = posting_title.at('span.price')
     price ? price.text.gsub(/\$/, '').to_i : 0
   end
 
   def location
-    location = page.at('span.postingtitletext small')
+    location = posting_title.at('small')
     location ? location.text.gsub(/ ?[\(\)]/, '') : ''
   end
 

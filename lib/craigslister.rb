@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require_relative './craigslister/item_searcher'
+require_relative './craigslister/scraper'
 require_relative './craigslister/post_scraper'
 require_relative './craigslister/post'
-require_relative './craigslister/main'
+require_relative './craigslister/craigslister'
