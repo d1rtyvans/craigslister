@@ -2,7 +2,7 @@
 class InvalidRangeError < StandardError
 end
 
-# Creates url from arguments and tells ItemSearcher to scrape
+# Creates url from arguments and scrapes
 class Craigslister
   include Scraper
 
