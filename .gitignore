@@ -1,3 +1,5 @@
 *.swp
 *.swo
+*.swm
+*.swn
 spec/examples.txt

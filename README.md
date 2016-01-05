@@ -20,7 +20,7 @@ couches = Craigslister.new(
   high: 2000, #optional (maximum price range)
 )
 
-results = couches.scrape! # scrapes craigslist and returns array of matching items
+results = couches.scrape # scrapes craigslist and returns array of matching items
 ```
 Item objects
 ```ruby
