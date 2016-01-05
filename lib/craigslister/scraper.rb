@@ -1,4 +1,4 @@
-# Houses all higher level scraping logic
+# Scrapes links and feeds them to PostScraper
 class Scraper
   def initialize(url, base_url)
     @url = url
