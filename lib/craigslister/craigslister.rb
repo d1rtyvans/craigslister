@@ -15,11 +15,7 @@ class Craigslister
   end
 
   def scrape
-    scraper.scrape
-  end
-
-  def links
-    scraper.links
+    Scraper.new(url, base_url).scrape
   end
 
   def url
@@ -29,10 +25,6 @@ class Craigslister
   end
 
   private
-
-  def scraper
-    Scraper.new(url, base_url)
-  end
 
   def base_url
     "https://#{area}.craigslist.org"
