@@ -38,7 +38,7 @@ RSpec.describe Craigslister do
         'https://sfbay.craigslist.org/search/sss?sort=rel&max_price=6000&query=bigger+tv')
     end
 
-    it 'builds url with a minimum price limit' do
+    it 'builds url with minimum price limit' do
       cat_nip = Craigslister.new(item: 'Catnip', low: 200)
 
       expect(cat_nip.url).to eq(
