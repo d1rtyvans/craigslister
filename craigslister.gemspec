@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.description = 'all you need is an item title and you can scrape posts from craigslist'
   s.authors     = ['Chris Scott']
   s.email       = 'christo247@gmail.com'
-  s.files       = ['lib/craigslister.rb',
-                   'lib/craigslister/craigslister.rb',
+  s.files       = ['lib/craigslister/craigslister.rb',
                    'lib/craigslister/scraper.rb',
                    'lib/craigslister/post_scraper.rb',
-                   'lib/craigslister/post.rb']
+                   'lib/craigslister/post.rb',
+                   'lib/craigslister.rb']
   s.homepage    = 'https://github.com/Yago580/craigslister'
   s.license     = 'MIT'
   s.add_runtime_dependency 'nokogiri', '~> 1.6', '>= 1.6.6.2'
