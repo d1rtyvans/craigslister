@@ -15,7 +15,8 @@ RSpec.describe Scraper do
 
     it 'returns properly formatted links for out of town craigslist posts' do
       scraper = Scraper.new(
-        File.expand_path('support/out_of_town.html', File.dirname(__FILE__)), '')
+        File.expand_path(
+          'support/out_of_town.html', File.dirname(__FILE__)), '')
 
       expect(scraper.links.first).to eq(
         'https://stockton.craigslist.org/mcy/5362368419.html')
