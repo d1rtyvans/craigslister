@@ -1,5 +1,10 @@
 # Houses all higher level scraping logic
-module Scraper
+class Scraper
+  def initialize(url, base_url)
+    @url = url
+    @base_url = base_url
+  end
+
   def links
     header_link.map { |link| format_link(link['href']) }
   end
@@ -7,6 +12,10 @@ module Scraper
   def scrape
     links.flat_map { |link| post_from(link) }
   end
+
+  private
+
+  attr_reader :url, :base_url
 
   def page_from(url)
     Nokogiri::HTML(open(url))

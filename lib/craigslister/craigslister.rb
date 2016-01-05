@@ -4,8 +4,6 @@ end
 
 # Creates url from arguments and scrapes
 class Craigslister
-  include Scraper
-
   attr_reader :area, :item, :high, :low
 
   def initialize(args)
@@ -16,6 +14,14 @@ class Craigslister
     validate_price_range
   end
 
+  def scrape
+    scraper.scrape
+  end
+
+  def links
+    scraper.links
+  end
+
   def url
     "#{base_url}/search/sss?sort=rel&"\
     "#{price_query}query="\
@@ -23,6 +29,10 @@ class Craigslister
   end
 
   private
+
+  def scraper
+    Scraper.new(url, base_url)
+  end
 
   def base_url
     "https://#{area}.craigslist.org"
@@ -36,6 +46,7 @@ class Craigslister
   end
 
   def validate_price_range
-    fail InvalidRangeError if low && high && low > high
+    return unless low && high && low > high
+    fail(InvalidRangeError, 'Price range is invalid.')
   end
 end
