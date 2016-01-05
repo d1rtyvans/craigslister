@@ -1,4 +1,4 @@
-# Creates Post objects out of an HTML page
+# Scrapes craigslist posts and packages data in Post objects
 class PostScraper
   def initialize(page, link)
     @page = page
