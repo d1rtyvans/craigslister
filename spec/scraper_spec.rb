@@ -38,5 +38,15 @@ RSpec.describe Scraper do
       expect(results[0].url).to eq('./spec/support/fake_item_1.html')
       expect(results[0].description).to eq('CHECK THE DESCRIPTION')
     end
+
+    context 'if given a number argument' do
+      it 'returns an array of that length' do
+        scraper = Scraper.new(
+          File.expand_path('support/test_page.html', File.dirname(__FILE__)), '')
+
+        two_items = scraper.scrape_only(2)
+        expect(two_items.length).to eq(2)
+      end
+    end
   end
 end

@@ -13,6 +13,10 @@ class Scraper
     links.flat_map { |link| post_from(link) }
   end
 
+  def scrape_only(n)
+    links.take(n).flat_map { |link| post_from(link) }
+  end
+
   private
 
   attr_reader :url, :base_url
