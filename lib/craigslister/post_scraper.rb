@@ -6,14 +6,7 @@ class PostScraper
   end
 
   def new_post
-    Post.new(
-      image: image,
-      title: title,
-      price: price,
-      location: location,
-      description: description,
-      url: link
-    )
+    Post.new(post_params)
   end
 
   private
@@ -22,6 +15,17 @@ class PostScraper
 
   def posting_title
     page.at('span.postingtitletext')
+  end
+
+  def post_params
+    {
+      image: image,
+      title: title,
+      price: price,
+      location: location,
+      description: description,
+      url: link
+    }
   end
 
   def image
