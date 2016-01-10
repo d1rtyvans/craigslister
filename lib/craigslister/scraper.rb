@@ -30,7 +30,7 @@ class Scraper
   end
 
   def format_link(link)
-    if link =~ /\w+\.craig/
+    if link.match(/\w+\.craig/)
       'https:' + link
     else
       base_url + link
