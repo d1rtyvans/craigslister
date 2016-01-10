@@ -1,3 +1,7 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "nokogiri"
+gem 'nokogiri'
+
+group :test do
+  gem 'rake'
+end
