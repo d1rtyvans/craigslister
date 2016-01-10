@@ -4,7 +4,7 @@ RSpec.describe Scraper do
   context '#links' do
     it 'scrapes post links from a craigslist page' do
       scraper = Scraper.new(
-        File.expand_path('support/test_page.html', File.dirname(__FILE__)), '')
+        absolute_path('support/test_page.html'), '')
 
       expect(scraper.links).to eq([
         './spec/support/fake_item_1.html',
@@ -26,7 +26,7 @@ RSpec.describe Scraper do
   context '#scrape' do
     it 'returns an array of "Posts"' do
       scraper = Scraper.new(
-        File.expand_path('support/test_page.html', File.dirname(__FILE__)), '')
+        absolute_path('support/test_page.html'), '')
 
       results = scraper.scrape
 
@@ -38,5 +38,19 @@ RSpec.describe Scraper do
       expect(results[0].url).to eq('./spec/support/fake_item_1.html')
       expect(results[0].description).to eq('CHECK THE DESCRIPTION')
     end
+
+    context 'if given a number argument' do
+      xit 'returns an array of that length' do
+        scraper = Scraper.new(
+          absolute_path('support/test_page.html'), '')
+
+        two_items = scraper.scrape_only(2)
+        expect(two_items.length).to eq(2)
+      end
+    end
   end
+end
+
+def absolute_path(path)
+  File.expand_path(path, File.dirname(__FILE__))
 end

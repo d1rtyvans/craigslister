@@ -38,7 +38,11 @@ class Craigslister
   end
 
   def validate_price_range
-    return unless low && high && low > high
-    fail(InvalidRangeError, 'Price range is invalid.')
+    fail(InvalidRangeError,
+         'Price range is invalid.') if price_invalid?
+  end
+
+  def price_invalid?
+    low && high && low > high
   end
 end
