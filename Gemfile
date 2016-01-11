@@ -5,4 +5,5 @@ gem 'nokogiri'
 group :test do
   gem 'rake'
   gem 'rspec'
+  gem 'webmock'
 end

@@ -45,4 +45,13 @@ RSpec.describe Craigslister do
         'https://sfbay.craigslist.org/search/sss?sort=rel&min_price=200&query=catnip')
     end
   end
+
+  context '#scrape' do
+    it 'scrapes craigslist and returns post objects' do
+      scraper = Craigslister.new(item: 'Honda CBR')
+      hondas = scraper.scrape
+
+      expect(hondas.count).to eq(4)
+    end
+  end
 end

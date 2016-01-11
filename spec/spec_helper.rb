@@ -18,7 +18,24 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'craigslister'
 require 'nokogiri'
+require 'webmock/rspec'
+require 'support/helpers'
+
+WebMock.disable_net_connect!(allow_localhost: true)
 RSpec.configure do |config|
+  config.before(:each) do
+    link_page = absolute_path('test_page.html')
+    post_page = absolute_path('fake_item_1.html')
+
+    stub_request(:get, 'https://sfbay.craigslist.org/search/sss?sort=rel&query=honda+cbr').
+      with(headers: { 'Accept' => '*/*', 'User-Agent' => 'Ruby' }).
+      to_return(status: 200, body: File.open(link_page), headers: {})
+
+    stub_request(:get, 'https://sfbay.craigslist.org/spec/support/fake_item_1.html').
+      with(headers: { 'Accept' => '*/*', 'User-Agent' => 'Ruby' }).
+      to_return(status: 200, body: File.open(post_page), headers: {})
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -33,6 +50,7 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  config.include Helpers
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|

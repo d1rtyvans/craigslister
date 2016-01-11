@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe Scraper do
+RSpec.describe LinkScraper do
   context '#links' do
     it 'scrapes post links from a craigslist page' do
-      scraper = Scraper.new(
-        absolute_path('support/test_page.html'), '')
+      scraper = LinkScraper.new(
+        absolute_path('test_page.html'), '')
 
       expect(scraper.links).to eq([
         './spec/support/fake_item_1.html',
@@ -14,21 +14,20 @@ RSpec.describe Scraper do
     end
 
     it 'returns properly formatted links for out of town craigslist posts' do
-      scraper = Scraper.new(
-        File.expand_path(
-          'support/out_of_town.html', File.dirname(__FILE__)), '')
+      scraper = LinkScraper.new(
+        absolute_path('out_of_town.html'), '')
 
       expect(scraper.links.first).to eq(
         'https://stockton.craigslist.org/mcy/5362368419.html')
     end
   end
 
-  context '#scrape' do
+  context '#posts' do
     it 'returns an array of "Posts"' do
-      scraper = Scraper.new(
-        absolute_path('support/test_page.html'), '')
+      scraper = LinkScraper.new(
+        absolute_path('test_page.html'), '')
 
-      results = scraper.scrape
+      results = scraper.posts
 
       expect(results.count).to eq(4)
       expect(results[0].title).to eq('2015 Honda CBR 300R')
@@ -39,8 +38,4 @@ RSpec.describe Scraper do
       expect(results[0].description).to eq('CHECK THE DESCRIPTION')
     end
   end
-end
-
-def absolute_path(path)
-  File.expand_path(path, File.dirname(__FILE__))
 end
