@@ -15,7 +15,7 @@ class Craigslister
   end
 
   def scrape
-    Scraper.new(url, base_url).scrape
+    Scraper.new(url, base_url).posts
   end
 
   def url
