@@ -9,7 +9,7 @@ class Scraper
     header_link.map { |link| format_link(link['href']) }
   end
 
-  def scrape
+  def posts
     links.flat_map { |link| post_from(link) }
   end
 

@@ -18,6 +18,8 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'craigslister'
 require 'nokogiri'
+require 'support/helpers'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -33,6 +35,7 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  config.include Helpers
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|
