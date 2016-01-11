@@ -1,5 +1,5 @@
 # Scrapes links and feeds them to PostScraper
-class Scraper
+class LinkScraper
   def initialize(url, base_url)
     @url = url
     @base_url = base_url

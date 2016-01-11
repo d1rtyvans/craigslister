@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Scraper do
+RSpec.describe LinkScraper do
   context '#links' do
     it 'scrapes post links from a craigslist page' do
-      scraper = Scraper.new(
+      scraper = LinkScraper.new(
         absolute_path('test_page.html'), '')
 
       expect(scraper.links).to eq([
@@ -14,7 +14,7 @@ RSpec.describe Scraper do
     end
 
     it 'returns properly formatted links for out of town craigslist posts' do
-      scraper = Scraper.new(
+      scraper = LinkScraper.new(
         absolute_path('out_of_town.html'), '')
 
       expect(scraper.links.first).to eq(
@@ -24,7 +24,7 @@ RSpec.describe Scraper do
 
   context '#posts' do
     it 'returns an array of "Posts"' do
-      scraper = Scraper.new(
+      scraper = LinkScraper.new(
         absolute_path('test_page.html'), '')
 
       results = scraper.posts
