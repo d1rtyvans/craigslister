@@ -46,10 +46,10 @@ RSpec.describe Craigslister do
     end
   end
 
-  context '#scrape' do
+  context '#posts' do
     it 'scrapes craigslist and returns post objects' do
       scraper = Craigslister.new(item: 'Honda CBR')
-      hondas = scraper.scrape
+      hondas = scraper.posts
 
       expect(hondas.count).to eq(4)
     end

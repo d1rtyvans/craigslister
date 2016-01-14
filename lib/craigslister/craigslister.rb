@@ -14,7 +14,7 @@ class Craigslister
     validate_price_range
   end
 
-  def scrape
+  def posts
     LinkScraper.new(url, base_url).posts
   end
 
