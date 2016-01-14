@@ -11,7 +11,7 @@ gem install craigslister
 gem 'craigslister'
 ```
 
-## Use
+## Client
 ```ruby
 require 'craigslister'
 
@@ -24,7 +24,7 @@ client = Craigslister.new(
 
 couches = client.posts
 ```
-####Posts
+## Posts
 ```ruby
 couch = couches[0]
 couch.title
