@@ -26,7 +26,7 @@ couches = client.posts
 ```
 Item objects
 ```ruby
-couch = results[0]
+couch = couches[0]
 couch.title
 couch.image
 couch.price
