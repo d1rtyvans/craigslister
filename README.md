@@ -18,13 +18,13 @@ require 'craigslister'
 client = Craigslister.new(
   item: 'Couch',
   area: 'austin', # optional (defaults to 'sfbay')
-  low: 500,       # optional
+  low:  500,       # optional
   high: 2000,     # optional
 )
 
 couches = client.posts
 ```
-Item objects
+####Posts
 ```ruby
 couch = couches[0]
 couch.title
