@@ -1,4 +1,5 @@
-# Craigslister [![Build Status](https://travis-ci.org/yago580/craigslister.svg)](https://travis-ci.org/yago580/craigslister)
+# Craigslister [![Build Status](https://travis-ci.org/yago580/craigslister.svg)](https://travis-ci.org/yago580/craigslister) [![Dependency Status](https://gemnasium.com/yago580/craigslister.svg)](https://gemnasium.com/yago580/craigslister)
+
 Ever found yourself wishing Craigslist had an api? Craigslister is here to save the day. Use Craigslister and scrape Craigslist for its data in neatly packaged Item objects. All you need is the name of an item!
 #### RubyGems
 ```ruby
