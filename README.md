@@ -17,9 +17,9 @@ require 'craigslister'
 
 client = Craigslister.new(
   item: 'Couch',
-  area: 'austin', #optional, defaults to 'sfbay'
-  low: 500, #optional
-  high: 2000, #optional
+  area: 'austin', # optional, defaults to 'sfbay'
+  low: 500,       # optional
+  high: 2000,     # optional
 )
 
 couches = client.posts
