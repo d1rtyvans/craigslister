@@ -8,7 +8,7 @@ class Craigslister
 
   def initialize(args)
     @area    = args.fetch(:area, 'sfbay')
-    @section    = args.fetch(:section, 'sss')
+    @section = args.fetch(:section, 'sss')
     @item    = args[:item]
     @high    = args.fetch(:high, nil)
     @low     = args.fetch(:low, nil)
