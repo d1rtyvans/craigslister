@@ -4,10 +4,11 @@ end
 
 # Creates url from arguments and scrapes
 class Craigslister
-  attr_reader :area, :item, :high, :low
+  attr_reader :area, :section, :item, :high, :low
 
   def initialize(args)
     @area    = args.fetch(:area, 'sfbay')
+    @section    = args.fetch(:section, 'sss')
     @item    = args[:item]
     @high    = args.fetch(:high, nil)
     @low     = args.fetch(:low, nil)
@@ -19,7 +20,7 @@ class Craigslister
   end
 
   def url
-    "#{base_url}/search/sss?sort=rel&"\
+    "#{base_url}/search/#{section}?sort=rel&"\
     "#{price_query}query="\
     "#{item.downcase.split(' ') * '+'}"
   end
