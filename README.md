@@ -18,6 +18,7 @@ require 'craigslister'
 client = Craigslister.new(
   item: 'Couch',
   area: 'austin', # optional (defaults to 'sfbay')
+  section: 'motorcycles', # optional (defaults to 'sss')
   low:  500,      # optional
   high: 2000,     # optional
 )
