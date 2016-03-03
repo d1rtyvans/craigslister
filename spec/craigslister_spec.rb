@@ -25,7 +25,9 @@ RSpec.describe Craigslister do
     end
 
     it 'builds url with section argument' do
-      harleys = Craigslister.new(area: 'austin', item: 'Harley Davidson', section: 'motorcycles')
+      harleys = Craigslister.new(
+        area: 'austin', item: 'Harley Davidson', section: 'motorcycles'
+      )
 
       expect(harleys.url).to eq(
         'https://austin.craigslist.org/search/motorcycles?sort=rel&query=harley+davidson')
