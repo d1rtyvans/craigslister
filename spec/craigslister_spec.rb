@@ -24,6 +24,15 @@ RSpec.describe Craigslister do
         'https://austin.craigslist.org/search/sss?sort=rel&query=harley+davidson')
     end
 
+    it 'builds url with section argument' do
+      harleys = Craigslister.new(
+        area: 'austin', item: 'Harley Davidson', section: 'motorcycles'
+      )
+
+      expect(harleys.url).to eq(
+        'https://austin.craigslist.org/search/motorcycles?sort=rel&query=harley+davidson')
+    end
+
     it 'builds url with price range' do
       big_tv = Craigslister.new(item: 'BIG TV', low: 200, high: 2000)
 
