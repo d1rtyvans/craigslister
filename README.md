@@ -18,15 +18,39 @@ require 'craigslister'
 client = Craigslister.new(
   item: 'Couch',
   area: 'austin', # optional (defaults to 'sfbay')
-  section: 'motorcycles', # optional (defaults to 'sss')
+  section: 'mca', # optional (defaults to 'sss')
   low:  500,      # optional
   high: 2000,     # optional
 )
-
-couches = client.posts
 ```
+
+The `area` and `section` parameters must be valid Craigslist url query strings.
+
+#### Areas
+| Area              | Query         |
+| ----------------- |:-------------:|
+| SF bay area       | `'sfbay'`     |
+| austin            | `'austin'`    |
+| mendincino county | `'mendocino'` |
+
+#### Sections
+| Section       | Query        |
+| ------------- |:------------:|
+| motorcycles   | `'mca'`      |
+| cars & trucks | `'cta'`      |
+| appliances    | `'ppa'`      |
+
+
+
+If you are unsure of what your local `area` query param may be it can be found in the browser when you navigate to craigslist e.g., `'https://sfbay.craigslist.org'`. The same can be done with `section`.
+
 ## Posts
+`Post` objects are instantiated with the data scraped from a single page of a Craigslist post.
 ```ruby
+# Post objects are instantiated with the data scraped from a single posting on Craigslist
+couches = client.posts
+
+# They have various attributes containing relevant post data
 couch = couches[0]
 couch.title
 couch.image
