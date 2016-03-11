@@ -42,7 +42,7 @@ The `area` and `section` parameters must be valid Craigslist url query strings.
 
 
 
-If you are unsure of what your local `area` query param may be it can be found in the browser when you navigate to craigslist e.g., `'https://sfbay.craigslist.org'`. The same can be done with `section`.
+If you are unsure of what your local `area` query param may be it can be found in the browser when you navigate to craigslist, the same can be done with `section`. `'https://sfbay.craigslist.org/search/cta?query=chevy%20chevelle'`. Here `'sfbay'` would be the area (SF bay area), and `'cta'` would be the section (cars & trucks).
 
 ## Posts
 `Post` objects are instantiated with the data scraped from a single page of a Craigslist post.
