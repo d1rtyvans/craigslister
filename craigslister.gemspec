@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'craigslister'
-  s.version     = '3.0.0'
+  s.version     = '3.1.0'
   s.date        = '2016-01-15'
   s.summary     = 'Scrape Craigslist for Posts'
   s.description = 'all you need is an item title and you can scrape posts from craigslist'
