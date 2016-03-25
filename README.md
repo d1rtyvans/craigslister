@@ -1,5 +1,5 @@
 # Craigslister
-[![Build Status](https://travis-ci.org/yago580/craigslister.svg)](https://travis-ci.org/yago580/craigslister)   [![Dependency Status](https://gemnasium.com/yago580/craigslister.svg)](https://gemnasium.com/yago580/craigslister) [![Code Climate](https://codeclimate.com/github/Yago580/craigslister/badges/gpa.svg)](https://codeclimate.com/github/Yago580/craigslister) [![Test Coverage](https://codeclimate.com/github/Yago580/craigslister/badges/coverage.svg)](https://codeclimate.com/github/Yago580/craigslister/coverage)
+[![Build Status](https://travis-ci.org/yago580/craigslister.svg)](https://travis-ci.org/yago580/craigslister)   [![Dependency Status](https://gemnasium.com/yago580/craigslister.svg)](https://gemnasium.com/yago580/craigslister) [![Code Climate](https://codeclimate.com/github/Yago580/craigslister/badges/gpa.svg)](https://codeclimate.com/github/Yago580/craigslister) [![Test Coverage](https://codeclimate.com/github/Yago580/craigslister/badges/coverage.svg)](https://codeclimate.com/github/Yago580/craigslister/coverage) [![Gem Version](https://badge.fury.io/rb/craigslister.svg)](https://badge.fury.io/rb/craigslister)
 
 Scrape Craigslist for `Posts`.
 #### RubyGems
