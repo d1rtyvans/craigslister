@@ -31,7 +31,8 @@ class LinkScraper
 
   def format_link(link)
     if link.match(/\w+\.craig/)
-      'https:' + link
+      link
+      # 'https:' + link
     else
       base_url + link
     end

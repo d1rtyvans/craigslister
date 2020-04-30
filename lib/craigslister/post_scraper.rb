@@ -24,8 +24,45 @@ class PostScraper
       price: price,
       location: location,
       description: description,
-      url: link
+      url: link,
+      bedrooms: bedrooms,
+      bathrooms: bathrooms,
+      other: other,
     }
+  end
+
+  def support_bubbles
+    page.css('span.shared-line-bubble')
+  end
+
+  def lower_support_bubbles
+    page.css('p.attrgroup')
+  end
+
+  def bed_bath
+    support_bubbles&.first&.children
+  end
+
+  def square_footage
+    support_bubbles&.last&.at('b')&.text
+  end
+
+  def bedrooms
+    return unless bed_bath.present?
+
+    bed_bath.first.text
+  end
+
+  def bathrooms
+    return unless bed_bath.present?
+
+    bed_bath.last.text
+  end
+
+  def other
+    lower_support_bubbles&.last&.children&.
+      map { |el| el&.text&.strip }&.
+      reject { |el| el&.empty? }
   end
 
   def image

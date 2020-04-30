@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/Yago580/craigslister'
   s.license     = 'MIT'
   s.add_runtime_dependency 'nokogiri', '~> 1.6', '>= 1.6.7.1'
+  s.add_runtime_dependency 'pry', '~> 0.12.2'
 end

@@ -4,12 +4,20 @@ end
 
 # Creates url from arguments and scrapes
 class Craigslister
-  attr_reader :area, :section, :item, :high, :low
+  attr_reader :area,
+              :section,
+              :item,
+              :high,
+              :low,
+              :bed_min,
+              :bed_max
 
   def initialize(args)
     @area    = args.fetch(:area, 'sfbay')
     @section = args.fetch(:section, 'sss')
     @item    = args[:item]
+    @bed_min = args.fetch(:bed_min, nil)
+    @bed_max = args.fetch(:bed_max, nil)
     @high    = args.fetch(:high, nil)
     @low     = args.fetch(:low, nil)
     validate_price_range
@@ -21,8 +29,9 @@ class Craigslister
 
   def url
     "#{base_url}/search/#{section}?sort=rel&"\
-    "#{price_query}query="\
-    "#{item.downcase.split(' ') * '+'}"
+    "#{price_query}&"\
+    "#{bedroom_query}&"\
+    "query=#{item.downcase.split(' ') * '+'}"\
   end
 
   private
@@ -35,6 +44,13 @@ class Craigslister
     result = ''
     result += "min_price=#{low}&" if low
     result += "max_price=#{high}&" if high
+    result
+  end
+
+  def bedroom_query
+    result = ''
+    result += "bedroom_min=#{bed_min}&" if bed_min
+    result += "bedroom_max=#{bed_max}&" if bed_max
     result
   end
 
